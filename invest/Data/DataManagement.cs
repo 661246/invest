@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,11 +35,27 @@ namespace invest.Data
             {
                 string[] lines = item.Split(',');
 
-                Stock newStock = new Stock(lines[1], Double.Parse(lines[3]), Double.Parse(lines[2]));
+                // name, amount, price
+               
 
                 // loop ove rthe stocks array and see if that exists,
                 // otherwise add; else add the anmount or minus the amount
-                stocks.Add(newStock);
+                stocks.ForEach((stock) => { 
+                    if(stock.name == lines[1] && lines[0] == "BUY")
+                    {
+                        stock.amount += Double.Parse(lines[3]);
+                    } else if (stock.name == lines[1] && lines[0] == "SELL")
+                    {
+                        stock.amount -= Double.Parse(lines[3]);
+                    } else
+                    {
+                        Stock newStock = new Stock(lines[1], Double.Parse(lines[3]), Double.Parse(lines[2]));
+                        stocks.Add(newStock);
+                    }
+                });
+
+
+                
             };
         }
     }
